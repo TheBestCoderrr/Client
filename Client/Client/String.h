@@ -28,6 +28,8 @@ inline ostream& operator<<(ostream& out, const String& string) {
 }
 
 inline istream& operator>>(istream& in, String& string) {
-	in.getline(string.GetStr(), strlen(string.GetStr()));
+	char Buffer[200];
+	in.getline(Buffer, strlen(Buffer));
+	string.SetStr(Buffer);
 	return in;
 }

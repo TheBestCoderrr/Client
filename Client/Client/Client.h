@@ -33,6 +33,7 @@ inline ostream& operator<<(ostream& out, Client& client){
 }
 
 inline istream& operator>>(istream& in,Client& client) {
+	in.ignore();
 	cout << "Enter firstname: ";
 	in >> client.FirstName;
 	
@@ -46,7 +47,7 @@ inline istream& operator>>(istream& in,Client& client) {
 	in >> client.PhoneNumber;
 	
 	cout << "Enter item: ";
-	cin.ignore();
+	in.ignore();
 	in >> client.item;
 	return in;
 }

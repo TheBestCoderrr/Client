@@ -9,6 +9,7 @@ int main() {
 	Client client;
 	size_t index;
 	String item;
+	char Buffer[200];
 	int UserVariant = -1;
 	while (UserVariant != 0) {
 		cout << "Choose variant: ";
@@ -45,6 +46,8 @@ int main() {
 			break;
 		case 10:
 			cin.ignore();
+			cin.getline(Buffer, strlen(Buffer));
+			item.SetStr(Buffer);
 			cin.getline(item.GetStr(), sizeof(item.GetStr()));
 			PrintByItem(list, item);
 			break;

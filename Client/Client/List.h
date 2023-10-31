@@ -7,18 +7,15 @@ template<typename type>
 class Node
 {
 public:
-    explicit Node(type v, Node* n = nullptr, Node* p = nullptr) :value(v), next(n), prev(p) {};
+    explicit Node(type v, Node* n = nullptr) :value(v), next(n) {};
     type getValue() const { return value; }
     void setValue(type v) { value = v; }
     Node* getNext() const { return next; }
     void setNext(Node* n) { next = n; }
-    Node* getPrev() const { return prev; }
-    void setPrev(Node* p) { prev = p; }
     void Print() { cout << value; }
 private:
     type value;
     Node* next;
-    Node* prev;
 };
 
 template<typename type>
@@ -99,7 +96,7 @@ void List<type>::print() const {
 
 template<typename type>
 void List<type>::push_back(type v) {
-    Node<type>* temp = new Node<type>(v, nullptr, tail);
+    Node<type>* temp = new Node<type>(v);
     if (tail)
         tail->setNext(temp);
     else
@@ -111,8 +108,7 @@ void List<type>::push_back(type v) {
 template<typename type>
 void List<type>::push_front(type v) {
     Node<type>* temp = new Node<type>(v, head);
-    if (head) head->setPrev(temp);
-    else tail = temp;
+    if (!head) tail = temp;
     head = temp;
     ++counter;
 }
@@ -122,7 +118,6 @@ void List<type>::pop_front() {
     if (head) {
         Node<type>* temp = head;
         head = head->getNext();
-        head->setPrev(nullptr);
         if (!tail) tail = nullptr;
         delete temp;
         --counter;
@@ -172,9 +167,8 @@ void List<type>::insert(size_t index, type v)
     if (index == 0) { push_front(v); return; }
     if (index == counter) { push_back(v); return; }
     Node<type>* prev = findNode(index - 1);
-    Node<type>* temp = new Node<type>(v, prev->getNext(), prev);
+    Node<type>* temp = new Node<type>(v, prev->getNext());
     prev->setNext(temp);
-    temp->getNext()->setPrev(temp);
     ++counter;
 }
 
@@ -186,7 +180,6 @@ void List<type>::pop_position(size_t index) {
     Node<type>* prev = findNode(index - 1);
     Node<type>* temp = prev->getNext();
     prev->setNext(temp->getNext());
-    temp->getNext()->setPrev(prev);
     delete temp;
     --counter;
 }
